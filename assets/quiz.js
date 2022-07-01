@@ -101,37 +101,3 @@ var questions = [
         })
 
     }
-
-    function resetState() {
-
-    }
-
-    // function selectAnswer(e) {
-    //     // var selectedButton = e.target;
-    //     // var correct = selectedButton.dataset.correct;
-    //     // setStatusClass(document.body, correct);
-    //     // Array.from(wrapperEl.children).forEach(button => {
-    //     //     setStatusClass(button, button.dataset.correct);
-    //     // })
-    // }
-
-    // function setStatusClass(element, correct) {
-    //     // clearStatusClass(element);
-    //     if (correct) {
-    //         element.classList.add('correct');
-
-    //     } else if (!correct) {
-    //         element.classList.add('wrong');
-    //     }
-    // }
-
-    // function clearStatusClass(element) {
-
-    // }
-
-
-
-    // btn1.innerHTML = questions[0].answers[0];
-    // btn2.innerHTML = questions[0].answers[1];
-    // btn3.innerHTML = questions[0].answers[2];
-    // btn4.innerHTML = questions[0].answers[3];
