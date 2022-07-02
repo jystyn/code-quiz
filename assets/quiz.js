@@ -2,102 +2,129 @@ var questions = [
     {
         question: 'What is like the skeleton of the website?',
         answers: [
-            {text: 'html', correct: true },
-            {text: 'css', correct: false },
-            {text: 'javascript', correct: false },
-            {text: 'c++', correct: false }
-        ]
+            {text: 'html'},
+            {text: 'css'},
+            {text: 'javascript'},
+            {text: 'c++'}
+        ],
+        correct: 'html'
     },
     {
         question: 'Which of these styles the website?',
         answers: [
-            {text: 'html', correct: false },
-            {text: 'css', correct: true },
-            {text: 'javascript', correct: false },
-            {text: 'c++', correct: false}
-        ]
+            {text: 'html'},
+            {text: 'css'},
+            {text: 'javascript'},
+            {text: 'c++'}
+        ],
+        correct: 'css'
     },
     {
         question: 'What makes a website interactive?',
         answers: [
-            {text: 'html', correct: false },
-            {text: 'css', correct: false },
-            {text: 'javascript', correct: true },
-            {text: 'c++', correct: false}
-        ]
+            {text: 'html'},
+            {text: 'css'},
+            {text: 'javascript'},
+            {text: 'c++'}
+        ],
+        correct: 'javascript'
     },
     {
         question: 'Which of these is the "and" logical operator?',
         answers: [
-            {text: '&&', correct: true },
-            {text: '||', correct: false },
-            {text: '>=', correct: false },
-            {text: '!', correct: false}
-        ]
+            {text: '&&'},
+            {text: '||'},
+            {text: '>='},
+            {text: '!'}
+        ],
+        correct: '&&'
     },
     {
         question: 'Which of these is the "or" logical operator?',
         answers: [
-            {text: '&&', correct: false },
-            {text: '||', correct: true },
-            {text: '>=', correct: false },
-            {text: '!', correct: false}
-        ]
+            {text: '&&'},
+            {text: '||'},
+            {text: '>='},
+            {text: '!'}
+        ],
+        correct: '||'
     }
 ];
     //timerEl allows us to display the countdown timer in the top right corner
-    var timerEl = document.getElementById('timer');
+    var timerEl = document.querySelector('#timer');
     // creating elements for us to modify different parts of our base HTML
-    var questionEl = document.getElementById('question');
-    // var answerBtnEls = document.querySelector('.answer');
-    var msgEl = document.getElementById('message');
-    var startBtnEl = document.getElementById('startBtn');
+    var questionEl = document.querySelector('#question');
+    var msgEl = document.querySelector('#message');
+    var startBtnEl = document.querySelector('#start-btn');
     var wrapperEl = document.querySelector('.wrapper');
-    var btnEl = document.querySelector('.btn');
+    var btnWrapperEL = document.querySelector('.btn-wrapper');
+    var finalPageEl = document.querySelector('#final-page');
+    var finalScoreEl = document.querySelector('#final-score');
     // create variables to shuffle questions
-    var shuffledQuestions, currentQuestionIndex;
+    var shuffledQuestions;
+    var currentQuestionIndex = 0;
+    var userScore = 0;
     var timeLeft = 60;
-    function startTimer() {
-       var timer = setInterval(function(){
-            if (timeLeft > 0) {
-                timeLeft--;
-                timerEl.innerHTML = 'Time Left: ' + timeLeft + 's';;
-            } else if (timeLeft === 0) {
-                timerEl.innerHTML = 'Times Up!';
-                clearInterval(timer);
-            }
-        },1000); 
-    }
-    function start(){
-        startTimer();
-        // When we press 'Start Quiz' it changes the page to get us ready for questions
+
+    
+    startBtnEl.addEventListener('click', startQuiz);
+    
+    // When we press 'Start Quiz' it clears the page
+    function startQuiz(){
         msgEl.innerHTML = '';
         startBtnEl.remove();
         shuffledQuestions = questions.sort(() => Math.random() - .5 );
-        currentQuestionIndex = 0;
-        setNextQuestion();
-    }    
-
-    function setNextQuestion() {
+        startTimer();
         showQuestion(shuffledQuestions[currentQuestionIndex]);
-    }
-
+    }   
+    // timer function called when the user presses 'start quiz' 
+    function startTimer() {
+        var timer = setInterval(function(){
+             if (timeLeft > 0) {
+                 timeLeft--;
+                 timerEl.innerHTML = 'Time Left: ' + timeLeft + 's';;
+             } else if (timeLeft === 0) {
+                 timerEl.innerHTML = 'Times Up!';
+                 clearInterval(timer);
+                 showFinalPage();
+             }
+         },1000); 
+     }
+    // The first question shows up when the user presses 'start quiz'
     function showQuestion(question) {
         questionEl.innerText = question.question;
+        btnWrapperEL.innerHTML = '';
         question.answers.forEach(answer => {
             var button = document.createElement('button');
             button.innerText = answer.text;
-            button.classList.add('btn');
-            wrapperEl.appendChild(button);
-            // selectAnswer();
+            btnWrapperEL.appendChild(button);
+            button.addEventListener("click", showNextQuestion);
         })
     }
 
-    function selectAnswer(){
-        btnEl.addEventListener('click', function(){
-        var userAnswer = this.innerText;
-        console.log(userAnswer);
+    function showNextQuestion(){
+        if (this.innerText == questions[currentQuestionIndex].correct) {
+        userScore+=10;
+        //message correct
+        } else {
+        timeLeft-=10;
+        //message wrong
+        }
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= questions.length) {
+            showFinalPage();
+        } else {
+            showQuestion(shuffledQuestions[currentQuestionIndex]);
+        }
+    }
 
-        })
+    function showFinalPage(){
+        wrapperEl.innerHTML = '';
+        finalPageEl.style.display = "flex";
+        finalScoreEl.innerText = userScore;
+        // addEventListener to make button submit to go to leaderboard
+    }
 
+    function showLeaderboard(){
+        
     }

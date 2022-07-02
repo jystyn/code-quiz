@@ -18,7 +18,15 @@
     <section class="wrapper">
         <h1 id ="question">Coding Quiz Challenge</h1>
         <p id ="message">Take this quiz to test your knowledge on coding! The quiz and timer start when you click the "Start Quiz" button. Don't dawdle because when the timer hits zero, you can't answer anymore questions. When you finish log your name and high score so you can brag to your friends!</p>
-        <button onclick="start()" id="startBtn">Start Quiz</button>
+        <div class = "btn-wrapper"></div>
+        <button id="start-btn">Start Quiz</button>
+    </section>
+    <section id="final-page" class="hidden">
+        <h2>Final Score: <span id = "final-score"></span></h2>
+        <form>
+            <input type="text" placeholder="Enter Initials">
+            <button id="submit-finalscore-btn">Submit</button>
+        </form>
     </section>
     <script src="./assets/quiz.js"></script>
 </body>
