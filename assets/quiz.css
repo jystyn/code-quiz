@@ -63,11 +63,6 @@ button:hover {
 #leaderboard {
     display: none;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    border: 5px solid blueviolet;
-    border-color: blueviolet;
-    gap: 5px;
-    width: 400px;
-    margin-left: 28%;
+    align-items: center;
+    gap: 10px;
 }

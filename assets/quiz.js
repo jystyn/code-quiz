@@ -62,13 +62,15 @@ var questions = [
     var finalScoreEl = document.querySelector('#final-score');
     var submitScoreBtnEl = document.querySelector('#submit-score-btn');
     var leaderboardEl = document.querySelector('#leaderboard');
+    var viewLeaderboardEL = document.querySelector('#view-leaderboard');
     // create variables to shuffle questions
     var shuffledQuestions;
     var currentQuestionIndex = 0;
     var userScore = 0;
     var timeLeft = 60;
+    var numberOfHighScores = 5;
 
-    
+    viewLeaderboardEL.addEventListener("click", showLeaderboard);
     startBtnEl.addEventListener('click', startQuiz);
     
     // When we press 'Start Quiz' it clears the page
@@ -130,9 +132,37 @@ var questions = [
     }
 
     function showLeaderboard(event){
-        console.log('test');
         event.preventDefault();
+        wrapperEl.innerHTML = '';
         leaderboardEl.style.display = "flex";
         finalScorePageEl.style.display = "none";
-        //create leaderboard with local data
+        checkHighScore(userScore);
     }
+
+    function checkHighScore(score){
+        var userInitials = document.querySelector("#initials").value;
+        var highscore = {
+            initials : userInitials,
+            score: userScore,
+        }
+        localStorage.setItem("highscore", JSON.stringify(highscore));
+        var highScores = JSON.parse(localStorage.getItem(highscore));
+        if (highScores) {
+            highScores = JSON.parse(highScores);
+        } else {
+            highScores = [];
+        }
+        highScores.push(highscore)
+        // var lowestScore = highScores[numberOfHighScores - 1].score;
+        console.log (highScores);
+        // if (score > lowestScore) {
+        //     console.log (highScores);
+        //     saveHighScore(score, highScores);
+        //     showHighScores();
+        // // 
+        // }
+    }
+
+    // function saveHighScore(score, highScores) {
+    //     highScores.
+    // }

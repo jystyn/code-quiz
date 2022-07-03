@@ -10,7 +10,7 @@
 <body>
     <header>
         <ul>
-            <li id="highScore">View Highscores</li>
+            <li id="view-leaderboard">View Leaderboard</li>
             <li id="timer">Time Left: 60s</li>
         </ul>
     </header>
@@ -24,7 +24,7 @@
     <section id="final-score-page">
         <h2>Final Score: <span id = "final-score"></span></h2>
         <form>
-            <input type="text" placeholder="Enter Initials">
+            <input id = "initials" type="text" placeholder="Enter Initials">
             <button id="submit-score-btn">Submit</button>
         </form>
     </section>
@@ -34,6 +34,8 @@
         <p>2. Test</p>
         <p>3. Test</p>
         <p>4. Test</p>
+        <p>5. Test</p>
+        <button onclick="location.reload();">Return to Start</button>
     </section>
     <script src="./assets/quiz.js"></script>
 
