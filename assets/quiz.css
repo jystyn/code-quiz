@@ -51,16 +51,23 @@ button:hover {
     color:silver;
 }
 
-#final-page {
+#final-score-page {
     display: none;
     justify-content: center;
     align-items: center;
     gap: 5px;
 }
-#final-page h2 {
+#final-score-page h2 {
     font-size: 16px;
 }
-
-/* .hidden {
+#leaderboard {
     display: none;
-} */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 5px solid blueviolet;
+    border-color: blueviolet;
+    gap: 5px;
+    width: 400px;
+    margin-left: 28%;
+}

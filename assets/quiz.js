@@ -58,8 +58,10 @@ var questions = [
     var startBtnEl = document.querySelector('#start-btn');
     var wrapperEl = document.querySelector('.wrapper');
     var btnWrapperEL = document.querySelector('.btn-wrapper');
-    var finalPageEl = document.querySelector('#final-page');
+    var finalScorePageEl = document.querySelector('#final-score-page');
     var finalScoreEl = document.querySelector('#final-score');
+    var submitScoreBtnEl = document.querySelector('#submit-score-btn');
+    var leaderboardEl = document.querySelector('#leaderboard');
     // create variables to shuffle questions
     var shuffledQuestions;
     var currentQuestionIndex = 0;
@@ -86,7 +88,7 @@ var questions = [
              } else if (timeLeft === 0) {
                  timerEl.innerHTML = 'Times Up!';
                  clearInterval(timer);
-                 showFinalPage();
+                 finalScorePage();
              }
          },1000); 
      }
@@ -112,19 +114,25 @@ var questions = [
         }
         currentQuestionIndex++;
         if (currentQuestionIndex >= questions.length) {
-            showFinalPage();
+            timeLeft = 0;
+            finalScorePage();
         } else {
             showQuestion(shuffledQuestions[currentQuestionIndex]);
         }
     }
 
-    function showFinalPage(){
+    function finalScorePage(){
         wrapperEl.innerHTML = '';
-        finalPageEl.style.display = "flex";
+        finalScorePageEl.style.display = "flex";
         finalScoreEl.innerText = userScore;
-        // addEventListener to make button submit to go to leaderboard
+        submitScoreBtnEl.addEventListener("click", showLeaderboard);
+
     }
 
-    function showLeaderboard(){
-        
+    function showLeaderboard(event){
+        console.log('test');
+        event.preventDefault();
+        leaderboardEl.style.display = "flex";
+        finalScorePageEl.style.display = "none";
+        //create leaderboard with local data
     }
