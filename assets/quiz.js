@@ -50,9 +50,8 @@ var questions = [
         correct: '||'
     }
 ];
-    //timerEl allows us to display the countdown timer in the top right corner
+    // These elements allow us to modify the html with javascript
     var timerEl = document.querySelector('#timer');
-    // creating elements for us to modify different parts of our base HTML
     var questionEl = document.querySelector('#question');
     var msgEl = document.querySelector('#message');
     var startBtnEl = document.querySelector('#start-btn');
@@ -63,17 +62,17 @@ var questions = [
     var submitScoreBtnEl = document.querySelector('#submit-score-btn');
     var leaderboardEl = document.querySelector('#leaderboard');
     var viewLeaderboardEL = document.querySelector('#view-leaderboard');
-    // create variables to shuffle questions
+    var leaderboardListEl = document.querySelector('#leaderboard-list');
+    // Variables to help cycle through questions and keep track of time and the user's score
     var shuffledQuestions;
     var currentQuestionIndex = 0;
     var userScore = 0;
     var timeLeft = 60;
-    var numberOfHighScores = 5;
-
-    viewLeaderboardEL.addEventListener("click", showLeaderboard);
+    // Clicking events on the home page
+    viewLeaderboardEL.addEventListener("click", goToLeaderboard);
     startBtnEl.addEventListener('click', startQuiz);
     
-    // When we press 'Start Quiz' it clears the page
+    // When we press 'Start Quiz' it clears the page and shows the first question
     function startQuiz(){
         msgEl.innerHTML = '';
         startBtnEl.remove();
@@ -81,7 +80,7 @@ var questions = [
         startTimer();
         showQuestion(shuffledQuestions[currentQuestionIndex]);
     }   
-    // timer function called when the user presses 'start quiz' 
+    // Timer function 
     function startTimer() {
         var timer = setInterval(function(){
              if (timeLeft > 0) {
@@ -94,7 +93,7 @@ var questions = [
              }
          },1000); 
      }
-    // The first question shows up when the user presses 'start quiz'
+    // This populates the first question and it's corresponding answers
     function showQuestion(question) {
         questionEl.innerText = question.question;
         btnWrapperEL.innerHTML = '';
@@ -105,7 +104,7 @@ var questions = [
             button.addEventListener("click", showNextQuestion);
         })
     }
-
+    // This shows a new question everytime you submit an answer
     function showNextQuestion(){
         if (this.innerText == questions[currentQuestionIndex].correct) {
         userScore+=10;
@@ -122,7 +121,7 @@ var questions = [
             showQuestion(shuffledQuestions[currentQuestionIndex]);
         }
     }
-
+    // This shows the user their final score and allows them to enter their initials
     function finalScorePage(){
         wrapperEl.innerHTML = '';
         finalScorePageEl.style.display = "flex";
@@ -130,39 +129,47 @@ var questions = [
         submitScoreBtnEl.addEventListener("click", showLeaderboard);
 
     }
-
+    // This shows the leaderboard after the user enters initials
     function showLeaderboard(event){
         event.preventDefault();
         wrapperEl.innerHTML = '';
         leaderboardEl.style.display = "flex";
         finalScorePageEl.style.display = "none";
-        checkHighScore(userScore);
+        // This gets rid of the ability to click "View Leaderboard" since we're already there
+        viewLeaderboardEL.removeEventListener("click", goToLeaderboard);
+        addHighScore();
     }
 
-    function checkHighScore(score){
+    function addHighScore(){
+        var listHighScores = JSON.parse(localStorage.getItem('listHighScores')) || [];
         var userInitials = document.querySelector("#initials").value;
-        var highscore = {
+        // Order high scores from greatest to least
+        var ordererdLdrbrd = listHighScores.sort((a, b) => (b.score > a.score) ? 1 : -1);
+        
+        var highScore = {
             initials : userInitials,
             score: userScore,
         }
-        localStorage.setItem("highscore", JSON.stringify(highscore));
-        var highScores = JSON.parse(localStorage.getItem(highscore));
-        if (highScores) {
-            highScores = JSON.parse(highScores);
-        } else {
-            highScores = [];
+        listHighScores.push(highScore);
+        localStorage.setItem("listHighScores", JSON.stringify(listHighScores));
+
+        for (var i = 0; i < ordererdLdrbrd.length; i++) {
+            var li = document.createElement('li');
+            li.innerText = `${ordererdLdrbrd[i].initials}: ${ordererdLdrbrd[i].score}`;
+            
+            leaderboardListEl.appendChild(li);
         }
-        highScores.push(highscore)
-        // var lowestScore = highScores[numberOfHighScores - 1].score;
-        console.log (highScores);
-        // if (score > lowestScore) {
-        //     console.log (highScores);
-        //     saveHighScore(score, highScores);
-        //     showHighScores();
-        // // 
-        // }
     }
 
-    // function saveHighScore(score, highScores) {
-    //     highScores.
-    // }
+    function goToLeaderboard() {
+        wrapperEl.innerHTML = '';
+        leaderboardEl.style.display = "flex";
+        finalScorePageEl.style.display = "none";
+        viewLeaderboardEL.removeEventListener("click", goToLeaderboard);
+        var leaderboardList = JSON.parse(localStorage.getItem('listHighScores')); 
+        for (var i = 0; i < leaderboardList.length; i++) {
+            var li = document.createElement('li');
+            li.innerText = `${leaderboardList[i].initials}: ${leaderboardList[i].score}`;
+            leaderboardListEl.appendChild(li);
+        }
+    }
