@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coding Quiz</title>
-    <link rel="stylesheet" type="text/css" href="./assets/quiz.css"/>
+    <link rel="stylesheet" type="text/css" href="./assets/style.css"/>
 </head>
 <body>
     <header>
@@ -17,12 +17,13 @@
 
     <section class="wrapper">
         <h1 id ="question">Coding Quiz Challenge</h1>
-        <p id ="message">Take this quiz to test your knowledge on coding! The quiz and timer start when you click the "Start Quiz" button. Don't dawdle because when the timer hits zero, you can't answer anymore questions. When you finish log your name and high score so you can brag to your friends!</p>
+        <p id ="message">Correct answers = 10 points<br>Incorrect answers = 10 second penalty<br>When you're ready click "Start Quiz."</p>
         <div class = "btn-wrapper"></div>
+        <div id = "ans-validation"></div>
         <button id="start-btn">Start Quiz</button>
     </section>
     <section id="final-score-page">
-        <h2>Final Score: <span id = "final-score"></span></h2>
+        <h2>Your Score: <span id = "final-score"></span></h2>
         <form>
             <input id = "initials" type="text" placeholder="Enter Initials">
             <button id="submit-score-btn">Submit</button>
@@ -33,7 +34,7 @@
         <ol id ="leaderboard-list"></ol>
         <button onclick="location.reload();">Return to Start</button>
     </section>
-    <script src="./assets/quiz.js"></script>
+    <script src="./assets/script.js"></script>
 
 </body>
 </html>
