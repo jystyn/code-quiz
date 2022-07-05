@@ -57,7 +57,7 @@ var questions = [
     var startBtnEl = document.querySelector('#start-btn');
     var wrapperEl = document.querySelector('.wrapper');
     var btnWrapperEL = document.querySelector('.btn-wrapper');
-    var AnsValidationEL = document.querySelector('#ans-validation');
+    var ansValidationEl = document.querySelector('#ans-validation');
     var finalScorePageEl = document.querySelector('#final-score-page');
     var finalScoreEl = document.querySelector('#final-score');
     var submitScoreBtnEl = document.querySelector('#submit-score-btn');
@@ -112,19 +112,19 @@ var questions = [
 
     // This shows a new question everytime you submit an answer
     function showNextQuestion(){
-        AnsValidationEL.innerHTML = '';
+        ansValidationEl.innerHTML = '';
         if (this.innerText == questions[currentQuestionIndex].correct) {
         userScore+=10;
         //Show message if correct
         var p = document.createElement('p');
         p.innerText = 'Correct! 10 points!'
-        AnsValidationEL.appendChild(p);
+        ansValidationEl.appendChild(p);
         } else {
         timeLeft-=10;
         //show message if wrong
         var p = document.createElement('p');
         p.innerText = 'Incorrect! 10 second penalty.'
-        AnsValidationEL.appendChild(p);
+        ansValidationEl.appendChild(p);
 
         }
         currentQuestionIndex++;
